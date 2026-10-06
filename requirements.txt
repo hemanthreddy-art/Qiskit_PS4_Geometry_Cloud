@@ -1,0 +1,11 @@
+# Requirements for IBM Qiskit Fall Fest 2026 - PS4 Geometry-Aware Quantum Cloud
+# Pinned versions tested on Windows x86_64
+
+qiskit==2.5.2
+qiskit-aer==0.17.2
+qiskit-ibm-runtime==0.50.0
+numpy>=1.26.0,<3.0.0
+scipy>=1.12.0
+rustworkx>=0.18.0
+matplotlib>=3.10.0
+pytest>=8.0.0

@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Architecture Study | IBM Qiskit Fall Fest 2026</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="theme-light">
+
+  <!-- Header & Navigation -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-area">
+        <div class="brand-logo-mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="18" r="3"></circle>
+            <circle cx="12" cy="6" r="3"></circle>
+            <line x1="6" y1="18" x2="12" y2="6"></line>
+            <line x1="18" y1="18" x2="12" y2="6"></line>
+            <line x1="6" y1="18" x2="18" y2="18"></line>
+          </svg>
+        </div>
+        <div>
+          <span class="brand-pill">IBM QISKIT FALL FEST 2026 &bull; PS4 RESEARCH PLATFORM</span>
+          <h1 class="brand-title">Geometry-Aware Quantum Cloud</h1>
+        </div>
+      </div>
+      <nav class="primary-nav">
+        <button class="nav-btn active" data-section="overview">Overview</button>
+        <span class="nav-arrow">&rarr;</span>
+        <button class="nav-btn" data-section="architectures">Architectures</button>
+        <span class="nav-arrow">&rarr;</span>
+        <button class="nav-btn" data-section="results">Results</button>
+        <span class="nav-arrow">&rarr;</span>
+        <button class="nav-btn" data-section="protection">Protection</button>
+        <span class="nav-arrow">&rarr;</span>
+        <button class="nav-btn" data-section="analysis">Analysis</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Research Journey / How It Works Stepper Bar -->
+  <aside class="presenter-strip">
+    <div class="presenter-inner">
+      <span class="presenter-tag">RESEARCH JOURNEY</span>
+      <div class="stepper-track">
+        <button class="stepper-step active" data-section="overview" data-scroll="sec-overview" title="Jump to Problem statement">
+          <span class="step-num">01</span><span class="step-lbl">Problem</span>
+        </button>
+        <span class="step-sep">&rarr;</span>
+        <button class="stepper-step" data-section="architectures" data-scroll="sec-architectures" title="Jump to Chip Geometries">
+          <span class="step-num">02</span><span class="step-lbl">Chip Geometries</span>
+        </button>
+        <span class="step-sep">&rarr;</span>
+        <button class="stepper-step" data-section="architectures" data-scroll="sub-visualizer" title="Jump to Qubit Routing visualizer">
+          <span class="step-num">03</span><span class="step-lbl">Qubit Routing</span>
+        </button>
+        <span class="step-sep">&rarr;</span>
+        <button class="stepper-step" data-section="results" data-scroll="card-noise-impact" title="Jump to Uncorrected Noise effects">
+          <span class="step-num">04</span><span class="step-lbl">Noise</span>
+        </button>
+        <span class="step-sep">&rarr;</span>
+        <button class="stepper-step" data-section="protection" data-scroll="sec-protection" title="Jump to Error Detection mechanism">
+          <span class="step-num">05</span><span class="step-lbl">Error Detection</span>
+        </button>
+        <span class="step-sep">&rarr;</span>
+        <button class="stepper-step" data-section="results" data-scroll="main-finding-hero" title="Jump to Fidelity Recovery findings">
+          <span class="step-num">06</span><span class="step-lbl">Fidelity Recovery</span>
+        </button>
+        <span class="step-sep">&rarr;</span>
+        <button class="stepper-step" data-section="analysis" data-scroll="decision-guide-card" title="Jump to Architecture Decision Guide">
+          <span class="step-num">07</span><span class="step-lbl">Decision Guide</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Application Container -->
+  <main class="app-main">
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 1: OVERVIEW (Explain The Problem First) -->
+    <!-- ========================================================================= -->
+    <section id="sec-overview" class="page-section active">
+      <div class="hero-container">
+
+        <!-- 1. The Core Problem Framing & Guided Action Buttons -->
+        <div class="hero-header-block">
+          <div class="hero-badge-wrap">
+            <span class="hero-tag">RESEARCH QUESTION &bull; ROUTING &amp; NOISE</span>
+          </div>
+          <h2 class="hero-heading">How Chip Geometry Affects Quantum Circuit Fidelity</h2>
+          <p class="hero-lead">
+            We study how qubit connectivity changes routing overhead, hardware-noise exposure,
+            and the fidelity of quantum states under a simulated Qiskit Aer transmon noise model.
+          </p>
+          <div class="hero-actions">
+            <button id="cta-walkthrough" class="btn btn-hero">Start 2-Minute Walkthrough &rarr;</button>
+            <button id="cta-results" class="btn btn-secondary">Explore Full Results &rarr;</button>
+          </div>
+        </div>
+
+        <!-- 2. Three Simple Core Cards: Problem, Mechanism, Solution Studied -->
+        <div class="three-pillars-grid">
+          <div class="pillar-card">
+            <span class="pillar-tag tag-problem">PROBLEM</span>
+            <h3>Distant qubits require additional routing operations.</h3>
+            <p>Quantum processor layouts cannot connect every qubit pair directly. When two qubits need to share an entangled state, they must communicate across intermediate physical hops.</p>
+          </div>
+          <div class="pillar-card">
+            <span class="pillar-tag tag-mechanism">MECHANISM</span>
+            <h3>Routing adds SWAP gates and circuit depth, increasing noise exposure.</h3>
+            <p>Every compiler-inserted SWAP operation expands into three physical CX gates, increasing execution duration and exposing the circuit to gate errors and decoherence.</p>
+          </div>
+          <div class="pillar-card highlight-pillar">
+            <span class="pillar-tag tag-solution">SOLUTION STUDIED</span>
+            <h3>Stabilizer-based error detection with post-selection filters corrupted runs.</h3>
+            <p>Helper ancilla qubits check bit-flip and phase-flip parities during simulation. Corrupted runs are discarded, recovering fidelity on the retained results.</p>
+          </div>
+        </div>
+
+        <!-- 3. Architectures Preview -->
+        <div class="arch-preview-strip">
+          <div class="preview-card">
+            <span class="preview-badge">STAR / T (5Q)</span>
+            <strong>Small Hub Layout</strong>
+            <span class="preview-detail">2016-inspired &bull; 3 hops &bull; 2 SWAPs</span>
+          </div>
+          <div class="preview-card">
+            <span class="preview-badge badge-teal">FINITE HYPERBOLIC (21Q)</span>
+            <strong>Non-Euclidean Patch</strong>
+            <span class="preview-detail">High connectivity &bull; 4 hops &bull; 3 SWAPs</span>
+          </div>
+          <div class="preview-card highlight-preview">
+            <span class="preview-badge badge-blue">HEAVY-HEX SUBGRAPH (27Q)</span>
+            <strong>Sparse Hexagonal Lattice</strong>
+            <span class="preview-detail">Contemporary benchmark &bull; 7 hops &bull; 6 SWAPs</span>
+          </div>
+        </div>
+
+        <!-- 4. Very Simple Visual Explanation of Routing -->
+        <div class="routing-visual-card">
+          <div class="rvc-header">
+            <span class="rvc-tag">VISUAL EXPLANATION</span>
+            <h3>Why Routing Decreases Quantum Reliability</h3>
+            <p class="rvc-sub">
+              Quantum hardware cannot always directly connect the qubits required by a circuit.
+              Routing inserts SWAP operations to move quantum information.
+            </p>
+          </div>
+
+          <div class="routing-visual-diagram">
+            <!-- Diagram Stage 1 -->
+            <div class="rv-row">
+              <span class="rv-label">Required state:</span>
+              <div class="rv-graphic">
+                <span class="q-node">Qubit A</span>
+                <span class="q-line-broken"><span class="q-cross">&times;</span> not directly connected</span>
+                <span class="q-node">Qubit B</span>
+              </div>
+            </div>
+
+            <!-- Diagram Stage 2 -->
+            <div class="rv-row">
+              <span class="rv-label">Hardware routing:</span>
+              <div class="rv-graphic">
+                <span class="q-node">Qubit A</span>
+                <span class="q-line-solid">&harr;</span>
+                <span class="q-hop-node">Hop 1</span>
+                <span class="q-line-solid">&harr;</span>
+                <span class="q-hop-node">Hop 2</span>
+                <span class="q-line-solid">&harr;</span>
+                <span class="q-node">Qubit B</span>
+              </div>
+              <span class="rv-subtext">Compiler inserts SWAP &rarr; SWAP operations</span>
+            </div>
+
+            <!-- Diagram Stage 3: The Penalty Cascade -->
+            <div class="penalty-chain-row">
+              <div class="p-step">More SWAPs</div>
+              <div class="p-arrow">&darr;</div>
+              <div class="p-step">More native gates</div>
+              <div class="p-arrow">&darr;</div>
+              <div class="p-step">Greater circuit depth</div>
+              <div class="p-arrow">&darr;</div>
+              <div class="p-step">More noise exposure</div>
+              <div class="p-arrow">&darr;</div>
+              <div class="p-step highlight-penalty">Lower fidelity</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Plain-English Beginner Glossary (Collapsible Accordion) -->
+        <div class="glossary-section-card">
+          <details class="glossary-accordion">
+            <summary class="glossary-summary">
+              <div class="summary-left">
+                <span class="glossary-icon">&#128214;</span>
+                <strong>What does this mean? Plain-English Glossary</strong>
+              </div>
+              <span class="summary-toggle-text">Click to expand / collapse</span>
+            </summary>
+            <div class="glossary-grid-7">
+              <div class="g-item">
+                <span class="g-term">Routing</span>
+                <p class="g-def">The extra operations needed to move quantum information between qubits that do not have a direct physical connection.</p>
+              </div>
+              <div class="g-item">
+                <span class="g-term">SWAP</span>
+                <p class="g-def">A circuit operation that exchanges quantum states between two adjacent connected physical qubits.</p>
+              </div>
+              <div class="g-item">
+                <span class="g-term">CX Gate</span>
+                <p class="g-def">The standard Controlled-NOT two-qubit gate used by the quantum processor to generate quantum entanglement.</p>
+              </div>
+              <div class="g-item">
+                <span class="g-term">Noise</span>
+                <p class="g-def">Unwanted physical hardware imperfections (gate infidelity, decoherence, measurement errors) that degrade quantum states.</p>
+              </div>
+              <div class="g-item">
+                <span class="g-term">Fidelity</span>
+                <p class="g-def">How closely the measured quantum state matches the theoretical target state. 1.0000 denotes a perfect match.</p>
+              </div>
+              <div class="g-item">
+                <span class="g-term">Stabilizer</span>
+                <p class="g-def">A quantum parity check used to detect whether bit-flip or phase-flip errors occurred during execution.</p>
+              </div>
+              <div class="g-item">
+                <span class="g-term">Post-Selection</span>
+                <p class="g-def">Keeping only the experimental runs that passed all error checks, discarding any corrupted measurements.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- 6. Collapsible Technical Environment Drawer -->
+        <div class="collapsible-container">
+          <button class="collapsible-toggle" id="toggle-tech-specs">
+            <span>Show Technical Environment &amp; Simulation Noise Details</span>
+            <span class="toggle-icon">+</span>
+          </button>
+          <div class="collapsible-content" id="tech-specs-content">
+            <div class="tech-specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Automated Test Verification</span>
+                <span class="spec-val">38 of 38 tests verified passing</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Simulation Framework</span>
+                <span class="spec-val">Qiskit 2.5.2 &bull; Qiskit Aer 0.17.2</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Simulated Transmon Noise Channel</span>
+                <span class="spec-val">p<sub>1q</sub>=0.001, p<sub>2q</sub>=0.015, p<sub>ro</sub>=0.015</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Shot Sampling Budget</span>
+                <span class="spec-val">60,000 shots per condition (20,000 per Pauli basis)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 2: ARCHITECTURES (Make Comparison Visual) -->
+    <!-- ========================================================================= -->
+    <section id="sec-architectures" class="page-section">
+      <div class="section-lead-block">
+        <span class="lead-badge">CHIP GEOMETRIES</span>
+        <h2>Three Ways of Connecting Quantum Bits</h2>
+        <p>
+          Different quantum processors connect their qubits in different geometries, directly determining how many routing
+          operations are needed to bridge distant qubits during quantum circuit execution.
+        </p>
+      </div>
+
+      <!-- 3 Clear Architecture Cards with Inline Vector Schematics -->
+      <div class="arch-cards-row">
+
+        <!-- Card 1: Star / T Layout -->
+        <div class="simple-arch-card">
+          <div class="simple-arch-header">
+            <span class="arch-tag">2016-INSPIRED</span>
+            <span class="arch-badge-subtle">Lowest Routing Overhead</span>
+            <h3>Star / T Layout</h3>
+            <span class="arch-concept">Small, hub-based 5-qubit topology</span>
+          </div>
+
+          <!-- Mini Vector Schematic Thumbnail -->
+          <div class="arch-mini-schematic">
+            <svg viewBox="0 0 200 90" width="100%" height="80">
+              <line x1="40" y1="30" x2="100" y2="30" stroke="#CBD5E1" stroke-width="2.5" />
+              <line x1="100" y1="30" x2="160" y2="30" stroke="#CBD5E1" stroke-width="2.5" />
+              <line x1="100" y1="30" x2="100" y2="70" stroke="#CBD5E1" stroke-width="2.5" />
+              <line x1="40" y1="30" x2="100" y2="30" stroke="#2563EB" stroke-width="3" stroke-dasharray="3,3" />
+              <line x1="100" y1="30" x2="100" y2="70" stroke="#2563EB" stroke-width="3" stroke-dasharray="3,3" />
+              <circle cx="40" cy="30" r="10" fill="#2563EB" />
+              <text x="40" y="34" font-size="10" fill="#FFFFFF" font-weight="bold" text-anchor="middle">Q0</text>
+              <circle cx="100" cy="30" r="10" fill="#E2E8F0" stroke="#64748B" stroke-width="1.5" />
+              <text x="100" y="34" font-size="10" fill="#172033" font-weight="bold" text-anchor="middle">Q2</text>
+              <circle cx="160" cy="30" r="10" fill="#E2E8F0" stroke="#64748B" stroke-width="1.5" />
+              <text x="160" y="34" font-size="10" fill="#172033" font-weight="bold" text-anchor="middle">Q1</text>
+              <circle cx="100" cy="70" r="10" fill="#2563EB" />
+              <text x="100" y="74" font-size="10" fill="#FFFFFF" font-weight="bold" text-anchor="middle">Q4</text>
+            </svg>
+          </div>
+
+          <p class="arch-blurb">A central junction qubit (Q2) connects to wings and a vertical stem, modeled after early 2016 IBM Yorktown chips.</p>
+
+          <div class="simple-arch-metrics">
+            <div class="m-row"><span>Total Qubits:</span><strong>5 qubits</strong></div>
+            <div class="m-row"><span>Connectivity Style:</span><strong>Hub and wings</strong></div>
+            <div class="m-row"><span>Routing Distance:</span><strong>3 hops (Q0 &rarr; Q4)</strong></div>
+            <div class="m-row"><span>SWAP Count:</span><strong>2 SWAPs (7 CX)</strong></div>
+            <div class="m-row"><span>Native CX Depth:</span><strong>Depth 4</strong></div>
+            <div class="m-row"><span>Shot Survival:</span><strong>85.65% kept</strong></div>
+            <div class="m-row"><span>Fidelity Before:</span><strong>0.9056</strong></div>
+            <div class="m-row highlight-row"><span>Fidelity After:</span><strong>0.9208 (+1.67%)</strong></div>
+          </div>
+        </div>
+
+        <!-- Card 2: Finite Hyperbolic Layout -->
+        <div class="simple-arch-card">
+          <div class="simple-arch-header">
+            <span class="arch-tag tag-hyperbolic">GEOMETRY-AWARE</span>
+            <span class="arch-badge-subtle">Balanced Interconnect</span>
+            <h3>Finite Hyperbolic</h3>
+            <span class="arch-concept">High-connectivity non-Euclidean patch</span>
+          </div>
+
+          <!-- Mini Vector Schematic Thumbnail -->
+          <div class="arch-mini-schematic">
+            <svg viewBox="0 0 200 90" width="100%" height="80">
+              <circle cx="100" cy="45" r="38" fill="none" stroke="#CBD5E1" stroke-width="1.5" />
+              <circle cx="100" cy="45" r="20" fill="none" stroke="#CBD5E1" stroke-width="1.5" />
+              <line x1="100" y1="7" x2="100" y2="83" stroke="#CBD5E1" stroke-width="1.5" />
+              <line x1="62" y1="45" x2="138" y2="45" stroke="#CBD5E1" stroke-width="1.5" />
+              <line x1="73" y1="18" x2="127" y2="72" stroke="#CBD5E1" stroke-width="1.5" />
+              <line x1="73" y1="18" x2="100" y2="45" stroke="#2563EB" stroke-width="3" stroke-dasharray="3,3" />
+              <line x1="100" y1="45" x2="127" y2="72" stroke="#2563EB" stroke-width="3" stroke-dasharray="3,3" />
+              <circle cx="73" cy="18" r="9" fill="#2563EB" />
+              <text x="73" y="22" font-size="9" fill="#FFFFFF" font-weight="bold" text-anchor="middle">Q6</text>
+              <circle cx="100" cy="45" r="8" fill="#E2E8F0" stroke="#64748B" stroke-width="1.5" />
+              <circle cx="127" cy="72" r="9" fill="#2563EB" />
+              <text x="127" y="76" font-size="9" fill="#FFFFFF" font-weight="bold" text-anchor="middle">Q13</text>
+            </svg>
+          </div>
+
+          <p class="arch-blurb">A finite network patch inspired by Poincaré disk geometry with higher central connectivity and lower graph diameter.</p>
+
+          <div class="simple-arch-metrics">
+            <div class="m-row"><span>Total Qubits:</span><strong>21 qubits</strong></div>
+            <div class="m-row"><span>Connectivity Style:</span><strong>Poincaré non-Euclidean</strong></div>
+            <div class="m-row"><span>Routing Distance:</span><strong>4 hops (Q6 &rarr; Q13)</strong></div>
+            <div class="m-row"><span>SWAP Count:</span><strong>3 SWAPs (10 CX)</strong></div>
+            <div class="m-row"><span>Native CX Depth:</span><strong>Depth 7</strong></div>
+            <div class="m-row"><span>Shot Survival:</span><strong>78.59% kept</strong></div>
+            <div class="m-row"><span>Fidelity Before:</span><strong>0.8871</strong></div>
+            <div class="m-row highlight-row"><span>Fidelity After:</span><strong>0.9146 (+3.09%)</strong></div>
+          </div>
+        </div>
+
+        <!-- Card 3: Heavy-Hex Subgraph -->
+        <div class="simple-arch-card featured-arch-card">
+          <div class="simple-arch-header">
+            <span class="arch-tag tag-featured">CONTEMPORARY BENCHMARK</span>
+            <span class="arch-badge-highlight">Longest Path &bull; Highest Gain</span>
+            <h3>Heavy-Hex Subgraph</h3>
+            <span class="arch-concept">Sparse grid-like lattice (Falcon-style)</span>
+          </div>
+
+          <!-- Mini Vector Schematic Thumbnail -->
+          <div class="arch-mini-schematic">
+            <svg viewBox="0 0 200 90" width="100%" height="80">
+              <path d="M 30,20 L 65,20 L 85,45 L 65,70 L 30,70 L 10,45 Z" fill="none" stroke="#CBD5E1" stroke-width="1.5" />
+              <path d="M 85,45 L 120,45 L 140,20 L 175,20 L 195,45 L 175,70 L 140,70 Z" fill="none" stroke="#CBD5E1" stroke-width="1.5" />
+              <path d="M 30,20 L 65,20 L 85,45 L 120,45 L 140,20 L 175,20" fill="none" stroke="#2563EB" stroke-width="3" stroke-dasharray="3,3" />
+              <circle cx="30" cy="20" r="9" fill="#2563EB" />
+              <text x="30" y="24" font-size="9" fill="#FFFFFF" font-weight="bold" text-anchor="middle">Q0</text>
+              <circle cx="175" cy="20" r="9" fill="#2563EB" />
+              <text x="175" y="24" font-size="9" fill="#FFFFFF" font-weight="bold" text-anchor="middle">Q14</text>
+              <circle cx="85" cy="45" r="4" fill="#94A3B8" />
+              <circle cx="120" cy="45" r="4" fill="#94A3B8" />
+            </svg>
+          </div>
+
+          <p class="arch-blurb">A sparse hexagonal grid where qubits have at most 3 connections to suppress crosstalk, evaluated on a 27-qubit unit cell.</p>
+
+          <div class="simple-arch-metrics">
+            <div class="m-row"><span>Total Qubits:</span><strong>27 qubits evaluated</strong></div>
+            <div class="m-row"><span>Connectivity Style:</span><strong>Sparse hexagonal lattice</strong></div>
+            <div class="m-row"><span>Routing Distance:</span><strong>7 hops (Q0 &rarr; Q14)</strong></div>
+            <div class="m-row"><span>SWAP Count:</span><strong>6 SWAPs (19 CX)</strong></div>
+            <div class="m-row"><span>Native CX Depth:</span><strong>Depth 13</strong></div>
+            <div class="m-row"><span>Shot Survival:</span><strong class="text-warn">72.37% kept</strong></div>
+            <div class="m-row"><span>Fidelity Before:</span><strong class="text-warn">0.8327 (lowest)</strong></div>
+            <div class="m-row highlight-row"><span>Fidelity After:</span><strong class="text-win">0.9255 (+11.15%)</strong></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Visual Rankings Card (Comparison Takeaway) -->
+      <div class="arch-rankings-row">
+        <div class="rank-card">
+          <span class="rank-title">Routing Overhead:</span>
+          <div class="rank-items">
+            <span>Star/T: <strong>Lowest (2 SWAPs)</strong></span>
+            <span class="sep">&bull;</span>
+            <span>Hyperbolic: <strong>Medium (3 SWAPs)</strong></span>
+            <span class="sep">&bull;</span>
+            <span>Heavy-Hex: <strong>Highest (6 SWAPs)</strong></span>
+          </div>
+        </div>
+        <div class="rank-card">
+          <span class="rank-title">Protection Gain:</span>
+          <div class="rank-items">
+            <span>Star/T: <strong>+1.67%</strong></span>
+            <span class="sep">&bull;</span>
+            <span>Hyperbolic: <strong>+3.09%</strong></span>
+            <span class="sep">&bull;</span>
+            <span class="highlight-gain-text">Heavy-Hex: <strong>+11.15% (Largest)</strong></span>
+          </div>
+        </div>
+        <div class="rank-card">
+          <span class="rank-title">Shot Survival:</span>
+          <div class="rank-items">
+            <span>Star/T: <strong>85.65% kept</strong></span>
+            <span class="sep">&bull;</span>
+            <span>Hyperbolic: <strong>78.59% kept</strong></span>
+            <span class="sep">&bull;</span>
+            <span>Heavy-Hex: <strong>72.37% kept</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 127Q Reference Notice -->
+      <div class="reference-note-box">
+        <strong>127-Qubit Reference Topology Note:</strong>
+        The 9-case empirical benchmark was evaluated on the 27-qubit Heavy-Hex unit cell subgraph to maintain rigorous statistical shot budgets (60,000 shots per condition).
+        The full 127-qubit IBM Eagle/Brisbane coupling graph (144 edges, diameter 26 hops) is modeled alongside as an architectural scaling reference.
+      </div>
+
+      <!-- Sub-Navigation for Architecture Tools -->
+      <div class="sub-nav-wrapper">
+        <div class="sub-nav">
+          <button class="sub-btn active" data-sub="visualizer">Interactive Topology Visualizer</button>
+          <button class="sub-btn" data-sub="specs-table">Technical Graph Details</button>
+        </div>
+
+        <!-- View 1: Interactive Visualizer & Friendly Target Pair Experiment -->
+        <div id="sub-visualizer" class="sub-view active">
+          <div class="visualizer-intro">
+            <h4>Explore the Coupling Graphs</h4>
+            <p>
+              Each circle represents a physical qubit. Lines indicate available two-qubit coupling edges.
+              The highlighted path illustrates how compiler routing bridges distant qubits using SWAP gate insertions.
+            </p>
+          </div>
+
+          <!-- Experiment Condition Selector -->
+          <div class="condition-selector-card">
+            <div class="condition-selector-row">
+              <span class="condition-title-lbl">Experiment condition:</span>
+              <div class="condition-btn-group" role="group" aria-label="Experiment condition">
+                <button class="btn-condition active" data-condition="ideal">Ideal</button>
+                <button class="btn-condition" data-condition="noisy">Noisy</button>
+                <button class="btn-condition" data-condition="protected">Protected</button>
+              </div>
+            </div>
+            <div class="condition-explainer-box">
+              <span class="condition-explainer-text" id="condition-explainer-text">Reference result without simulated hardware noise.</span>
+            </div>
+          </div>
+
+          <div class="topology-toolbar-simple">
+            <div class="topo-buttons-group">
+              <div class="topo-buttons">
+                <button class="btn btn-topo active" data-topo="star_t">Star / T (5Q)</button>
+                <button class="btn btn-topo" data-topo="heavy_hex_27">Heavy-Hex (27Q)</button>
+                <button class="btn btn-topo" data-topo="hyperbolic">Hyperbolic (21Q)</button>
+                <button class="btn btn-topo" data-topo="heavy_hex_127">Heavy-Hex Reference (127Q)</button>
+              </div>
+              <div class="topo-127-short-note" id="topo-127-short-note">
+                <span class="ref-tag-subtle">127Q NOTE</span> 127Q is a structural/scaling reference only. The verified 60,000-shot benchmark uses the 27Q Heavy-Hex subgraph.
+              </div>
+            </div>
+            <div class="topo-legend-simple">
+              <span class="leg-item"><span class="leg-dot dot-data"></span> Target Qubits</span>
+              <span class="leg-item"><span class="leg-dot dot-ancilla"></span> Syndrome Ancillas</span>
+              <span class="leg-item"><span class="leg-dot dot-path"></span> Routing Path</span>
+              <span class="leg-item"><span class="leg-dot dot-idle"></span> Other Qubits</span>
+            </div>
+          </div>
+
+          <!-- Dynamic Target Pair Controls & Live Qiskit Transpiler -->
+          <div class="interactive-routing-controls">
+            <div class="routing-section-heading">
+              <h4 class="controls-heading">Try another pair of qubits</h4>
+              <p class="controls-sub">Choose two qubits and see how much routing the circuit needs.</p>
+            </div>
+
+            <div class="routing-control-row">
+              <div class="pair-pickers">
+                <div class="picker-group">
+                  <label for="select-qubit-a">Qubit A:</label>
+                  <select id="select-qubit-a" class="qubit-dropdown" title="Select starting physical qubit"></select>
+                </div>
+                <div class="picker-arrow">&harr;</div>
+                <div class="picker-group">
+                  <label for="select-qubit-b">Qubit B:</label>
+                  <select id="select-qubit-b" class="qubit-dropdown" title="Select target physical qubit"></select>
+                </div>
+                <button id="btn-run-routing" class="btn btn-action" title="Trigger Qiskit SABRE Transpiler">Transpile Route</button>
+              </div>
+
+              <div class="pair-preset-buttons">
+                <span class="preset-label">Presets:</span>
+                <button class="btn btn-preset active" id="preset-benchmark" title="Official Benchmark Remote Qubit Pair">Benchmark Pair</button>
+                <button class="btn btn-preset" id="preset-neighbor" title="Direct Neighbors (Distance 1)">Direct Neighbors</button>
+                <button class="btn btn-preset" id="preset-furthest" title="Furthest Separated Physical Qubits">Furthest Pair</button>
+                <span class="pair-status-tag tag-benchmark" id="pair-status-tag">Benchmark pair</span>
+              </div>
+            </div>
+
+            <!-- Hardware Mapping Clarifier (Part 3) -->
+            <div class="qubit-numbering-note">
+              <span class="qnn-icon">&#9432;</span>
+              <span><strong>Hardware Mapping Note:</strong> Qubit numbers belong to each chip separately. Qubit 14 on Heavy-Hex is not the same physical qubit as Qubit 14 on another architecture. The furthest pair is calculated separately for the currently selected chip.</span>
+            </div>
+
+            <div class="routing-hint-bar">
+              <div class="hint-inner">
+                <span class="hint-icon">&#9432;</span>
+                <span id="routing-instruction-text">Click any two qubits on the graph to evaluate routing distance, SWAP gate insertions, and hardware depth.</span>
+              </div>
+              <span id="routing-engine-badge" class="badge-engine-live">
+                Qiskit SABRE Transpiler Active
+              </span>
+            </div>
+          </div>
+
+          <!-- Beginner Visualizer Explanation (Part 2) -->
+          <div class="canvas-guide-line">
+            Each circle is a physical qubit on the chip. Lines show which qubits can communicate directly.
+          </div>
+
+          <div class="topology-canvas-wrapper">
+            <svg id="topology-svg" viewBox="-200 -200 400 400" preserveAspectRatio="xMidYMid meet"></svg>
+            <div id="topo-tooltip" class="topo-tooltip"></div>
+          </div>
+
+          <div class="topology-status-bar">
+            <div class="stat-col"><span class="lbl">Architecture</span> <strong id="topo-info-name">Star / T (5Q)</strong></div>
+            <div class="stat-col"><span class="lbl">Target Pair</span> <strong id="topo-info-pair">(0, 4)</strong></div>
+            <div class="stat-col"><span class="lbl">Graph Distance</span> <strong id="topo-info-dist">3 hops</strong></div>
+            <div class="stat-col"><span class="lbl">SWAP Gates</span> <strong id="topo-info-swaps">2 SWAPs</strong></div>
+            <div class="stat-col"><span class="lbl">Native CX</span> <strong id="topo-info-cx">7 CX</strong></div>
+            <div class="stat-col"><span class="lbl">2Q Depth</span> <strong id="topo-info-depth">4</strong></div>
+            <div class="path-full-col"><span class="lbl">Shortest Route:</span> <strong id="topo-info-path">0 &rarr; 2 &rarr; 3 &rarr; 4</strong></div>
+          </div>
+
+          <!-- Live Routing Verification Banner -->
+          <div id="routing-verification-banner" class="routing-banner banner-benchmark">
+            <span class="banner-badge">OFFICIAL BENCHMARK PAIR</span>
+            <span id="routing-banner-text">
+              Selected target pair matches the verified 60,000-shot evaluated baseline:
+              <strong>0.9056 Noisy Fidelity &rarr; 0.9208 Protected Fidelity (85.65% Survival Yield)</strong>.
+            </span>
+          </div>
+
+          <!-- TARGET-PAIR TOPOLOGY RECOMMENDATION SECTION (Part 2) -->
+          <div id="topology-recommendation-section" class="topology-recommendation-card">
+            <div class="rec-card-header">
+              <span class="rec-tag">TOPOLOGY COMPARISON &amp; RECOMMENDATION</span>
+              <h4 class="rec-title">Which topology is better for this connection?</h4>
+              <p class="rec-sub">
+                Evaluate routing efficiency across architectures for this connection objective (prioritizing lower SWAPs, native CX gates, and 2Q depth).
+              </p>
+            </div>
+
+            <!-- Comparison Table for Available Architectures -->
+            <div class="rec-table-wrap">
+              <table class="rec-table">
+                <thead>
+                  <tr>
+                    <th>Architecture</th>
+                    <th>Target Pair</th>
+                    <th>Graph Distance</th>
+                    <th>SWAP Gates</th>
+                    <th>Native CX</th>
+                    <th>2Q Depth</th>
+                    <th>Routing Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="rec-table-body">
+                  <!-- Dynamically populated via app.js -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Recommendation Result Box -->
+            <div class="rec-winner-card" id="rec-winner-card">
+              <div class="rec-winner-head">
+                <span class="rec-winner-badge">RECOMMENDED FOR THIS CONNECTION</span>
+                <h4 id="rec-winner-name">Analyzing architectures...</h4>
+              </div>
+              <div class="rec-winner-metrics" id="rec-winner-metrics"></div>
+              <p class="rec-winner-why" id="rec-winner-why"></p>
+              <div class="rec-winner-action-wrap" id="rec-winner-action-box"></div>
+              <div class="rec-safety-box" id="rec-safety-box"></div>
+            </div>
+
+            <div class="rec-disclaimer-note">
+              <strong>Scientific Scope on Physical Mapping:</strong>
+              Physical qubit indices correspond to distinct geometric locations on each chip.
+              This recommendation compares how each processor layout satisfies the routing objective according to its connectivity and graph diameter.
+            </div>
+          </div>
+        </div>
+
+        <!-- View 2: Detailed Specs Table -->
+        <div id="sub-specs-table" class="sub-view">
+          <table class="simple-data-table">
+            <thead>
+              <tr>
+                <th>Architecture</th>
+                <th>Total Qubits</th>
+                <th>Coupling Edges</th>
+                <th>Max Degree</th>
+                <th>Graph Diameter</th>
+                <th>Target Remote Pair</th>
+                <th>Shortest Distance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Star / T (2016)</strong></td>
+                <td>5</td>
+                <td>4</td>
+                <td>3 (junction Q2)</td>
+                <td>3 hops</td>
+                <td>(0, 4)</td>
+                <td>3 hops</td>
+              </tr>
+              <tr>
+                <td><strong>Heavy-Hex Subgraph</strong></td>
+                <td>27</td>
+                <td>28</td>
+                <td>3 (lattice nodes)</td>
+                <td>12 hops</td>
+                <td>(0, 14)</td>
+                <td>7 hops</td>
+              </tr>
+              <tr>
+                <td><strong>Finite Hyperbolic</strong></td>
+                <td>21</td>
+                <td>40</td>
+                <td>6 (central hub)</td>
+                <td>4 hops</td>
+                <td>(6, 13)</td>
+                <td>4 hops</td>
+              </tr>
+              <tr>
+                <td><strong>Heavy-Hex Reference</strong></td>
+                <td>127</td>
+                <td>144</td>
+                <td>3</td>
+                <td>26 hops</td>
+                <td>(0, 126)</td>
+                <td>26 hops</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 3: RESULTS (Main Result Impossible To Miss) -->
+    <!-- ========================================================================= -->
+    <section id="sec-results" class="page-section">
+      <div class="section-lead-block">
+        <span class="lead-badge">EXPERIMENTAL FINDINGS</span>
+        <h2>Experimental Results: Routing, Noise, and Recovery</h2>
+        <p>
+          Simulated under a documented Qiskit Aer transmon noise model across 60,000 shots per architecture condition.
+        </p>
+      </div>
+
+      <!-- 1. UNCORRECTED NOISE IMPACT HERO CARD (Research Journey Step 04) -->
+      <div id="card-noise-impact" class="noise-impact-hero">
+        <div class="nih-head">
+          <span class="lead-badge">RESEARCH STEP 04 &bull; SIMULATED TRANSMON NOISE</span>
+          <h3 class="nih-title">Uncorrected Noise Impact: How Routing Reduces State Fidelity</h3>
+          <p class="nih-lead">
+            Physical hardware noise (gate error p<sub>2q</sub>=0.015, measurement error, decoherence) degrades quantum states during circuit execution.
+            When distant qubits require extra routing hops, compiler-inserted SWAP operations deepen the circuit, progressively lowering measured fidelity.
+          </p>
+        </div>
+
+        <!-- Causal Flow Chain -->
+        <div class="nih-chain-row">
+          <div class="nih-step"><strong>1. Chip Geometry</strong><span>Physical connectivity</span></div>
+          <div class="nih-arrow">&rarr;</div>
+          <div class="nih-step"><strong>2. Routing Hops</strong><span>Bridging distance</span></div>
+          <div class="nih-arrow">&rarr;</div>
+          <div class="nih-step"><strong>3. SWAP Gates</strong><span>3 CX gates per SWAP</span></div>
+          <div class="nih-arrow">&rarr;</div>
+          <div class="nih-step"><strong>4. Noise Exposure</strong><span>Cumulative gate noise</span></div>
+          <div class="nih-arrow">&rarr;</div>
+          <div class="nih-step nih-step-alert"><strong>5. Fidelity Drop</strong><span>Lower baseline fidelity</span></div>
+        </div>
+
+        <!-- The 3 Uncorrected Baselines -->
+        <div class="nih-baseline-grid">
+          <div class="nih-card">
+            <span class="nih-arch">Star / T (5Q)</span>
+            <span class="nih-hops">3 hops &bull; 2 SWAPs &bull; Depth 4</span>
+            <div class="nih-val">Ideal 1.0000 &rarr; <strong class="text-warn">0.9056</strong></div>
+            <span class="nih-note">Shallow depth, lowest noise reduction (&minus;9.44%)</span>
+          </div>
+
+          <div class="nih-card">
+            <span class="nih-arch">Finite Hyperbolic (21Q)</span>
+            <span class="nih-hops">4 hops &bull; 3 SWAPs &bull; Depth 7</span>
+            <div class="nih-val">Ideal 1.0000 &rarr; <strong class="text-warn">0.8871</strong></div>
+            <span class="nih-note">Moderate depth, moderate noise drop (&minus;11.29%)</span>
+          </div>
+
+          <div class="nih-card highlight-nih-card">
+            <div class="nih-card-badge">HIGHEST UNCORRECTED NOISE DROP</div>
+            <span class="nih-arch">Heavy-Hex Subgraph (27Q)</span>
+            <span class="nih-hops">7 hops &bull; 6 SWAPs &bull; Depth 13</span>
+            <div class="nih-val">Ideal 1.0000 &rarr; <strong class="text-warn-bold">0.8327</strong></div>
+            <span class="nih-note-alert">Longest path &bull; Highest noise penalty (&minus;16.73%)</span>
+          </div>
+        </div>
+
+        <div class="nih-explanation">
+          <strong>Why did Heavy-Hex suffer the largest noise drop?</strong>
+          Because its sparse hexagonal grid required <strong>6 SWAPs (19 native CX gates, depth 13)</strong> to connect distant qubits (0, 14),
+          the circuit spent more execution time subject to two-qubit gate errors and decoherence, pulling baseline fidelity down to <strong>0.8327</strong>.
+        </div>
+      </div>
+
+      <!-- 2. MAIN FINDING HERO CARD: FIDELITY RECOVERY (Research Journey Step 06) -->
+      <div id="main-finding-hero" class="main-finding-hero">
+        <div class="mf-head">
+          <span class="finding-badge-sim">SIMULATION-BASED EXPERIMENTAL BENCHMARK</span>
+          <h3 class="mf-title">Error detection improved measured fidelity across all three architectures.</h3>
+        </div>
+
+        <div class="mf-stats-row">
+          <div class="mf-stat-card">
+            <span class="mf-arch-name">Star / T (5Q)</span>
+            <div class="mf-val-change">0.9056 &rarr; <span class="highlight-green">0.9208</span></div>
+            <span class="mf-gain-pill">+1.67% improvement</span>
+          </div>
+
+          <div class="mf-stat-card">
+            <span class="mf-arch-name">Finite Hyperbolic (21Q)</span>
+            <div class="mf-val-change">0.8871 &rarr; <span class="highlight-green">0.9146</span></div>
+            <span class="mf-gain-pill">+3.09% improvement</span>
+          </div>
+
+          <div class="mf-stat-card highlight-mf-card">
+            <div class="mf-highlight-badge">LARGEST RELATIVE IMPROVEMENT</div>
+            <span class="mf-arch-name">Heavy-Hex Subgraph (27Q)</span>
+            <div class="mf-val-change">0.8327 &rarr; <span class="highlight-blue-bold">0.9255</span></div>
+            <span class="mf-gain-pill pill-blue">+11.15% improvement</span>
+          </div>
+        </div>
+
+        <div class="mf-explanation-box">
+          <p>
+            <strong>Why did Heavy-Hex gain the most?</strong>
+            Heavy-Hex started with the lowest uncorrected fidelity (0.8327) because its longer 7-hop routing path introduced more operations (6 SWAPs, 19 CX) and greater noise exposure.
+            After error detection and post-selection, its measured fidelity increased to <strong>0.9255 (+11.15%)</strong>.
+          </p>
+        </div>
+      </div>
+
+      <!-- CLEARLY SEPARATE 'FIDELITY' FROM 'SHOT SURVIVAL' (Point 8) -->
+      <div class="concept-separation-grid">
+        <div class="concept-card concept-fidelity">
+          <span class="concept-tag tag-blue">CONCEPT 1: FIDELITY</span>
+          <h4>How accurate are the accepted quantum states?</h4>
+          <p class="concept-sub">Fidelity measures how closely the measured Bell state matches the theoretical |&Phi;<sup>+</sup>&rang; target (1.0000 = perfect match).</p>
+          <div class="concept-stats">
+            <div class="cs-row"><span>Star / T:</span> <strong>0.9056 &rarr; 0.9208</strong> <span class="badge-inc">+1.67%</span></div>
+            <div class="cs-row"><span>Hyperbolic:</span> <strong>0.8871 &rarr; 0.9146</strong> <span class="badge-inc">+3.09%</span></div>
+            <div class="cs-row highlight-cs-row"><span>Heavy-Hex:</span> <strong>0.8327 &rarr; 0.9255</strong> <span class="badge-inc badge-big">+11.15%</span></div>
+          </div>
+        </div>
+
+        <div class="concept-card concept-survival">
+          <span class="concept-tag tag-amber">CONCEPT 2: SHOT SURVIVAL</span>
+          <h4>How many experimental runs remain after filtering?</h4>
+          <p class="concept-sub">Shot survival measures the percentage of experimental runs that pass error detection and are kept for analysis.</p>
+          <div class="concept-stats">
+            <div class="cs-row"><span>Star / T:</span> <strong>85.65% kept</strong> <span class="text-warn">14.35% discarded</span></div>
+            <div class="cs-row"><span>Hyperbolic:</span> <strong>78.59% kept</strong> <span class="text-warn">21.41% discarded</span></div>
+            <div class="cs-row highlight-cs-row-amber"><span>Heavy-Hex:</span> <strong>72.37% kept</strong> <span class="text-warn-bold">27.63% discarded</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="distinction-note-card">
+        <div class="note-icon">&#9432;</div>
+        <p>
+          <strong>Important Distinction:</strong> On Heavy-Hex, <strong>72.37% refers to shot survival (usable runs remaining)</strong>,
+          while the measured state fidelity after post-selection is <strong>0.9255 (state accuracy)</strong>.
+          Protection improves the quality of retained results, but some experimental runs are discarded.
+        </p>
+      </div>
+
+      <!-- RESULTS TRADE-OFF: CONCEPTUAL TWO-AXIS COMPARISON (Point 9) -->
+      <div class="tradeoff-twoaxis-card">
+        <div class="twoaxis-header">
+          <span class="tradeoff-pill">THE ARCHITECTURAL TRADE-OFF</span>
+          <h4>Higher Fidelity vs. Shot Survival Yield</h4>
+          <p>Protection improves measured fidelity, but the improvement comes at the cost of discarded experimental runs.</p>
+        </div>
+
+        <div class="twoaxis-diagram-box">
+          <svg viewBox="0 0 520 220" class="twoaxis-svg">
+            <!-- Subtle Axes Grid Lines -->
+            <line x1="70" y1="20" x2="70" y2="180" stroke="#CBD5E1" stroke-width="2" />
+            <text x="60" y="24" font-size="11" font-weight="bold" fill="#64748B" text-anchor="end">Higher Fidelity &uarr;</text>
+
+            <line x1="70" y1="180" x2="490" y2="180" stroke="#CBD5E1" stroke-width="2" />
+            <text x="490" y="202" font-size="11" font-weight="bold" fill="#64748B" text-anchor="end">Higher Shot Survival &rarr;</text>
+
+            <!-- Heavy-Hex projection lines to axes (cx=170, cy=55) -->
+            <line x1="170" y1="55" x2="170" y2="180" stroke="#93C5FD" stroke-width="1.5" stroke-dasharray="3,3" />
+            <line x1="70" y1="55" x2="170" y2="55" stroke="#93C5FD" stroke-width="1.5" stroke-dasharray="3,3" />
+            <text x="170" y="195" font-size="9.5" font-family="JetBrains Mono, monospace" fill="#2563EB" text-anchor="middle">72.37%</text>
+            <text x="64" y="59" font-size="9.5" font-family="JetBrains Mono, monospace" fill="#2563EB" text-anchor="end">0.9255</text>
+
+            <!-- Hyperbolic projection lines to axes (cx=295, cy=130) -->
+            <line x1="295" y1="130" x2="295" y2="180" stroke="#99F6E4" stroke-width="1.5" stroke-dasharray="3,3" />
+            <line x1="70" y1="130" x2="295" y2="130" stroke="#99F6E4" stroke-width="1.5" stroke-dasharray="3,3" />
+            <text x="295" y="195" font-size="9.5" font-family="JetBrains Mono, monospace" fill="#0D9488" text-anchor="middle">78.59%</text>
+            <text x="64" y="134" font-size="9.5" font-family="JetBrains Mono, monospace" fill="#0D9488" text-anchor="end">0.9146</text>
+
+            <!-- Star / T projection lines to axes (cx=410, cy=115) -->
+            <line x1="410" y1="115" x2="410" y2="180" stroke="#BBF7D0" stroke-width="1.5" stroke-dasharray="3,3" />
+            <line x1="70" y1="115" x2="410" y2="115" stroke="#BBF7D0" stroke-width="1.5" stroke-dasharray="3,3" />
+            <text x="410" y="195" font-size="9.5" font-family="JetBrains Mono, monospace" fill="#16805B" text-anchor="middle">85.65%</text>
+            <text x="64" y="119" font-size="9.5" font-family="JetBrains Mono, monospace" fill="#16805B" text-anchor="end">0.9208</text>
+
+            <!-- Data Point: Star / T (High survival 85.65%, lower fidelity gain) -->
+            <circle cx="410" cy="115" r="9" fill="#16805B" />
+            <text x="410" y="98" font-size="11.5" font-weight="bold" fill="#172033" text-anchor="middle">Star / T (5Q)</text>
+            <text x="410" y="138" font-size="10" fill="#64748B" text-anchor="middle">85.65% kept &bull; F=0.9208</text>
+
+            <!-- Data Point: Hyperbolic (Balanced survival 78.59%, balanced gain) -->
+            <circle cx="295" cy="130" r="9" fill="#0D9488" />
+            <text x="295" y="113" font-size="11.5" font-weight="bold" fill="#172033" text-anchor="middle">Hyperbolic (21Q)</text>
+            <text x="295" y="153" font-size="10" fill="#64748B" text-anchor="middle">78.59% kept &bull; F=0.9146</text>
+
+            <!-- Data Point: Heavy-Hex (Highest fidelity 0.9255, lowest survival 72.37%) -->
+            <circle cx="170" cy="55" r="11" fill="#2563EB" />
+            <text x="170" y="38" font-size="12" font-weight="bold" fill="#2563EB" text-anchor="middle">Heavy-Hex (27Q)</text>
+            <text x="170" y="78" font-size="10" fill="#1E40AF" font-weight="600" text-anchor="middle">72.37% kept &bull; F=0.9255 (+11.15%)</text>
+          </svg>
+        </div>
+
+        <div class="twoaxis-summary-row">
+          <div class="tas-box">
+            <span>Star / T:</span> <strong>85.65% kept</strong> (14.35% discarded)
+          </div>
+          <div class="tas-box">
+            <span>Hyperbolic:</span> <strong>78.59% kept</strong> (21.41% discarded)
+          </div>
+          <div class="tas-box highlight-tas">
+            <span>Heavy-Hex:</span> <strong>72.37% kept</strong> (27.63% discarded)
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-Tabs for Deeper Results Exploration -->
+      <div class="sub-nav-wrapper">
+        <div class="sub-nav">
+          <button class="sub-btn active" data-sub="overhead-view">Routing Gate Operations</button>
+          <button class="sub-btn" data-sub="benchmark-matrix-view">Full 9-Case Benchmark Matrix</button>
+          <button class="sub-btn" data-sub="figures-gallery-view">Publication Figures</button>
+        </div>
+
+        <!-- View 1: Routing Overhead -->
+        <div id="sub-overhead-view" class="sub-view active">
+          <div class="bars-grid">
+            <div class="bar-card">
+              <h4>Routing SWAPs by Architecture</h4>
+              <p>Extra gate operations added by Qiskit routing:</p>
+              <div class="simple-bar-list">
+                <div class="b-row"><span>Star/T:</span><div class="b-bar"><div class="b-fill fill-green" style="width: 25%;"></div></div><strong>2 SWAP (3 protected)</strong></div>
+                <div class="b-row"><span>Hyperbolic:</span><div class="b-bar"><div class="b-fill fill-teal" style="width: 50%;"></div></div><strong>3 SWAP (6 protected)</strong></div>
+                <div class="b-row"><span>Heavy-Hex:</span><div class="b-bar"><div class="b-fill fill-blue" style="width: 100%;"></div></div><strong>6 SWAP (11 protected)</strong></div>
+              </div>
+            </div>
+
+            <div class="bar-card">
+              <h4>Native Two-Qubit Depth (CX)</h4>
+              <p>Hardware execution depth exposed to decoherence:</p>
+              <div class="simple-bar-list">
+                <div class="b-row"><span>Star/T:</span><div class="b-bar"><div class="b-fill fill-green" style="width: 30%;"></div></div><strong>Depth 4 (11 protected)</strong></div>
+                <div class="b-row"><span>Hyperbolic:</span><div class="b-bar"><div class="b-fill fill-teal" style="width: 55%;"></div></div><strong>Depth 7 (16 protected)</strong></div>
+                <div class="b-row"><span>Heavy-Hex:</span><div class="b-bar"><div class="b-fill fill-blue" style="width: 100%;"></div></div><strong>Depth 13 (23 protected)</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View 2: Full 9-Case Matrix -->
+        <div id="sub-benchmark-matrix-view" class="sub-view">
+          <div class="filter-bar-clean">
+            <div class="f-group">
+              <label for="filter-arch">Architecture:</label>
+              <select id="filter-arch" class="clean-select">
+                <option value="all">All Topologies (3)</option>
+                <option value="2016_5qubit_T">Star / T (5Q)</option>
+                <option value="contemporary_ibm_heavy_hex_27q">Heavy-Hex Subgraph (27Q)</option>
+                <option value="finite_hyperbolic_poincare_21q">Finite Hyperbolic (21Q)</option>
+              </select>
+            </div>
+            <div class="f-group">
+              <label for="filter-cond">Condition:</label>
+              <select id="filter-cond" class="clean-select">
+                <option value="all">All Conditions (3)</option>
+                <option value="ideal">Ideal Baseline</option>
+                <option value="noisy">Noisy Baseline</option>
+                <option value="noisy_protection">Noisy + Protection</option>
+              </select>
+            </div>
+            <div class="f-hint">Click any row to inspect raw Pauli tomography shot distributions. <span class="f-subhint">(&lang;XX&rang;, &lang;YY&rang;, &lang;ZZ&rang; are measurements along three quantum axes used to calculate Bell-state fidelity.)</span></div>
+          </div>
+
+          <div class="table-scroll-box">
+            <table class="simple-data-table interactive-table" id="benchmark-matrix-table">
+              <thead>
+                <tr>
+                  <th>Architecture</th>
+                  <th>Condition</th>
+                  <th>Distance</th>
+                  <th>SWAP</th>
+                  <th>Native CX</th>
+                  <th>2Q Depth</th>
+                  <th>Accepted Shots</th>
+                  <th>Survival %</th>
+                  <th class="th-tomography" title="XX / YY / ZZ are measurements along three quantum axes used to calculate Bell-state fidelity.">&lang;XX&rang; <span class="th-tip-icon" aria-label="Axis measurement info">&#9432;</span></th>
+                  <th class="th-tomography" title="XX / YY / ZZ are measurements along three quantum axes used to calculate Bell-state fidelity.">&lang;YY&rang; <span class="th-tip-icon" aria-label="Axis measurement info">&#9432;</span></th>
+                  <th class="th-tomography" title="XX / YY / ZZ are measurements along three quantum axes used to calculate Bell-state fidelity.">&lang;ZZ&rang; <span class="th-tip-icon" aria-label="Axis measurement info">&#9432;</span></th>
+                  <th>Bell Fidelity</th>
+                  <th>&plusmn; &sigma;</th>
+                </tr>
+              </thead>
+              <tbody id="benchmark-matrix-tbody">
+                <!-- Populated dynamically via app.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Raw Tomography Inspector Drawer (Clean Light Card Styling) -->
+          <div id="tomography-inspector" class="tomography-drawer">
+            <div class="drawer-header">
+              <h4 id="inspector-title">Raw Shot Counts &amp; Syndrome Inspector</h4>
+              <button id="close-inspector-btn" class="close-btn">&times;</button>
+            </div>
+            <div id="inspector-content" class="drawer-body"></div>
+          </div>
+        </div>
+
+        <!-- View 3: Publication Figures -->
+        <div id="sub-figures-gallery-view" class="sub-view">
+          <div class="figures-layout">
+            <div class="fig-list">
+              <button class="fig-nav-btn active" data-fig="benchmark_9case_dashboard.png">Executive 9-Case Dashboard</button>
+              <button class="fig-nav-btn" data-fig="bell_fidelity_by_topology.png">Bell Fidelity Progression</button>
+              <button class="fig-nav-btn" data-fig="fidelity_improvement_from_protection.png">Fidelity Gain (&Delta;F)</button>
+              <button class="fig-nav-btn" data-fig="fidelity_vs_survival_tradeoff.png">Fidelity vs. Survival Trade-Off</button>
+              <button class="fig-nav-btn" data-fig="protection_overhead_comparison.png">Protection Gate Overhead</button>
+              <button class="fig-nav-btn" data-fig="survival_yield_by_topology.png">Survival Yield (%)</button>
+              <button class="fig-nav-btn" data-fig="swap_count_by_topology.png">SWAP Operation Count</button>
+              <button class="fig-nav-btn" data-fig="native_two_qubit_depth_by_topology.png">Native 2Q Depth</button>
+              <button class="fig-nav-btn" data-fig="topology_graphs.png">Coupling Graph Schematics</button>
+            </div>
+            <div class="fig-viewer-area">
+              <div class="fig-image-box">
+                <img id="active-figure-img" src="/figures/benchmark_9case_dashboard.png" alt="Figure View">
+              </div>
+              <p class="fig-caption" id="active-figure-caption">
+                <strong>Figure 1: Executive 9-Case Dashboard.</strong> Multi-panel comparative analysis of routing overhead, gate depth, Bell-state fidelity, and survival yield across all architectures.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 4: PROTECTION (Simple 4-Step Process) -->
+    <!-- ========================================================================= -->
+    <section id="sec-protection" class="page-section">
+      <div class="section-lead-block">
+        <span class="lead-badge">ERROR MITIGATION</span>
+        <h2>How Protection Works: Simple 4-Step Process</h2>
+        <p>
+          We use stabilizer-based error detection to identify corrupted runs, and post-selection to remove them from analysis.
+        </p>
+      </div>
+
+      <!-- Visual Progression of Error Detection (Point 7) -->
+      <div class="prot-simple-flow">
+        <div class="ps-step">
+          <div class="ps-step-head">
+            <span class="ps-num">1</span>
+            <h4>Run Noisy Circuit</h4>
+          </div>
+          <p>Execute the entangled Bell-state circuit under simulated superconducting transmon noise.</p>
+        </div>
+        <div class="ps-arrow">&rarr;</div>
+        <div class="ps-step">
+          <div class="ps-step-head">
+            <span class="ps-num">2</span>
+            <h4>Measure Stabilizer Checks</h4>
+          </div>
+          <p>Helper ancilla qubits perform parity checks to detect bit-flip (ZZ) and phase-flip (XX) errors.</p>
+        </div>
+        <div class="ps-arrow">&rarr;</div>
+        <div class="ps-step">
+          <div class="ps-step-head">
+            <span class="ps-num">3</span>
+            <h4>Reject Runs with Errors</h4>
+          </div>
+          <p>Discard failed runs where syndrome &ne; 00, filtering out detected errors.</p>
+        </div>
+        <div class="ps-arrow">&rarr;</div>
+        <div class="ps-step highlight-ps-step">
+          <div class="ps-step-head">
+            <span class="ps-num num-green">4</span>
+            <h4>Calculate Fidelity on Accepted Runs</h4>
+          </div>
+          <p>The retained uncorrupted runs exhibit significantly higher measured state fidelity.</p>
+        </div>
+      </div>
+
+      <!-- Core Operational Distinction Sentence (Point 7) -->
+      <div class="distinction-note-card">
+        <div class="note-icon">&#9888;</div>
+        <p>
+          <strong>Crucial Operational Principle:</strong>
+          Protection does not repair a corrupted run. It identifies runs likely affected by detectable errors and removes them from the final analysis.
+        </p>
+      </div>
+
+      <!-- Benefit vs Cost Cards -->
+      <div class="benefit-cost-row">
+        <div class="bc-card bc-benefit">
+          <div class="bc-header">
+            <span class="bc-tag tag-green">THE BENEFIT</span>
+            <h4>Higher Measured Fidelity</h4>
+          </div>
+          <div class="bc-list">
+            <div class="bc-item"><span>Star / T:</span> <strong>0.9056 &rarr; 0.9208</strong> <span class="badge-inc">+1.67%</span></div>
+            <div class="bc-item"><span>Hyperbolic:</span> <strong>0.8871 &rarr; 0.9146</strong> <span class="badge-inc">+3.09%</span></div>
+            <div class="bc-item highlight-bc-item"><span>Heavy-Hex:</span> <strong>0.8327 &rarr; 0.9255</strong> <span class="badge-inc badge-big">+11.15%</span></div>
+          </div>
+          <p class="bc-note">Stabilizer checks successfully isolate and discard noise-corrupted runs.</p>
+        </div>
+
+        <div class="bc-card bc-cost">
+          <div class="bc-header">
+            <span class="bc-tag tag-amber">THE COST</span>
+            <h4>Lower Usable Shot Yield</h4>
+          </div>
+          <div class="bc-list">
+            <div class="bc-item"><span>Star / T:</span> <strong>85.65% kept</strong> <span class="text-warn">14.35% discarded</span></div>
+            <div class="bc-item"><span>Hyperbolic:</span> <strong>78.59% kept</strong> <span class="text-warn">21.41% discarded</span></div>
+            <div class="bc-item highlight-bc-cost"><span>Heavy-Hex:</span> <strong>72.37% kept</strong> <span class="text-warn-bold">27.63% discarded</span></div>
+          </div>
+          <p class="bc-note">The fidelity recovery requires discarding over a quarter of total shots on Heavy-Hex.</p>
+        </div>
+      </div>
+
+      <!-- Scope Notice -->
+      <div class="scope-notice-clean">
+        <div class="notice-icon">&#9888;</div>
+        <div class="notice-text">
+          <strong>Important Scientific Scope:</strong>
+          This protocol implements <strong>stabilizer-based quantum error detection with post-selection</strong>, and is strictly distinct from <strong>fault-tolerant quantum error correction</strong>.
+          Corrupted runs are detected and discarded during offline data filtering rather than actively corrected using real-time quantum feedforward operations.
+        </div>
+      </div>
+
+      <!-- Survival Statistics Table -->
+      <div class="card-simple">
+        <h3 class="card-heading-simple">Complete Post-Selection Statistics (60,000 Shots per Architecture)</h3>
+        <table class="simple-data-table">
+          <thead>
+            <tr>
+              <th>Architecture</th>
+              <th>Total Shots</th>
+              <th>Accepted Shots</th>
+              <th>Discarded Shots</th>
+              <th>Survival Yield</th>
+              <th>Fidelity Without Protection</th>
+              <th>Fidelity With Protection</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Star / T (5Q)</strong></td>
+              <td class="mono">60,000</td>
+              <td class="mono">51,392</td>
+              <td class="mono">8,608</td>
+              <td class="mono"><strong>85.65%</strong></td>
+              <td class="mono">0.9056</td>
+              <td class="mono highlight-green"><strong>0.9208</strong> (+1.67%)</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><strong>Heavy-Hex (27Q)</strong></td>
+              <td class="mono">60,000</td>
+              <td class="mono">43,423</td>
+              <td class="mono highlight-amber-bold">16,577</td>
+              <td class="mono highlight-amber-bold"><strong>72.37%</strong></td>
+              <td class="mono">0.8327</td>
+              <td class="mono highlight-blue-bold"><strong>0.9255</strong> (+11.15%)</td>
+            </tr>
+            <tr>
+              <td><strong>Finite Hyperbolic (21Q)</strong></td>
+              <td class="mono">60,000</td>
+              <td class="mono">47,152</td>
+              <td class="mono">12,848</td>
+              <td class="mono"><strong>78.59%</strong></td>
+              <td class="mono">0.8871</td>
+              <td class="mono highlight-green"><strong>0.9146</strong> (+3.09%)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 5: ANALYSIS (Decision Guide & Interactive Questions) -->
+    <!-- ========================================================================= -->
+    <section id="sec-analysis" class="page-section">
+      <div class="section-lead-block">
+        <span class="lead-badge">SYNTHESIS &amp; DECISION</span>
+        <h2>Architecture Decision Guide &amp; Analysis</h2>
+        <p>
+          Translating empirical routing and protection trade-offs into practical quantum cloud decisions.
+        </p>
+      </div>
+
+      <!-- WHICH ARCHITECTURE IS BEST? (Decision Guide) -->
+      <div id="decision-guide-card" class="decision-guide-card">
+        <div class="dg-header">
+          <span class="dg-tag">APPLICATION GUIDELINES &bull; VERIFIED BENCHMARK</span>
+          <h3>Which Architecture is Best?</h3>
+          <p class="dg-sub">The best architecture depends on the routing objective, target connection, and available shot budget:</p>
+        </div>
+
+        <div class="dg-cards-grid">
+          <!-- Star/T -->
+          <div class="dg-card">
+            <h4>Star / T (5Q)</h4>
+            <span class="dg-verdict">Best for shallow, local circuits &bull; High shot survival</span>
+            <div class="dg-benchmark-mini">
+              <strong>Benchmark:</strong> 0.9056 &rarr; <span class="highlight-green">0.9208 (+1.67%)</span> &bull; <strong>85.65%</strong> kept
+            </div>
+            <ul class="dg-list">
+              <li>Circuit is shallow and localized (small routing distance)</li>
+              <li>High shot survival yield (>85%) is critical to avoid wasted execution time</li>
+              <li>Total qubit count remains small (&le; 5 qubits)</li>
+              <li>Lower SWAP overhead (2 SWAPs, 7 CX gates)</li>
+            </ul>
+          </div>
+
+          <!-- Heavy-Hex -->
+          <div class="dg-card highlight-dg-card">
+            <div class="dg-featured-badge">HIGHEST FIDELITY RECOVERY</div>
+            <h4>Heavy-Hex Subgraph (27Q)</h4>
+            <span class="dg-verdict">Best for scalable planar lattices with error mitigation</span>
+            <div class="dg-benchmark-mini">
+              <strong>Benchmark:</strong> 0.8327 &rarr; <span class="highlight-blue-bold">0.9255 (+11.15%)</span> &bull; <strong>72.37%</strong> kept
+            </div>
+            <ul class="dg-list">
+              <li>Scaling to planar superconducting chips with sparse crosstalk</li>
+              <li>Routing depth can be absorbed or bridged through stabilizers</li>
+              <li>Shot budget can afford discarding ~28% of runs</li>
+              <li>Strongest fidelity gain (+11.15%) delivers the highest overall state fidelity (0.9255)</li>
+            </ul>
+          </div>
+
+          <!-- Hyperbolic -->
+          <div class="dg-card">
+            <h4>Finite Hyperbolic (21Q)</h4>
+            <span class="dg-verdict">Best for balanced interconnects &bull; Low diameter</span>
+            <div class="dg-benchmark-mini">
+              <strong>Benchmark:</strong> 0.8871 &rarr; <span class="highlight-green">0.9146 (+3.09%)</span> &bull; <strong>78.59%</strong> kept
+            </div>
+            <ul class="dg-list">
+              <li>Low graph diameter (4 hops) and uniform central hub connectivity are valued</li>
+              <li>Balanced shot survival (~79%) with moderate fidelity recovery (+3.09%)</li>
+              <li>Future non-planar or 3D multichip interconnects</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dg-footer">
+          <strong>Decision Principle:</strong> No single architecture is universally best. Heavy-Hex has the highest protected fidelity (0.9255) and largest measured improvement (+11.15%), but Star/T retains the highest percentage of experimental runs (85.65%). Therefore, the best architecture depends on the routing objective, target connection, and available shot budget.
+        </div>
+      </div>
+
+      <!-- ONE-MINUTE TAKEAWAY CARD (Point 13) -->
+      <div class="one-minute-takeaway-card">
+        <div class="omt-header">
+          <span class="omt-badge">EXECUTIVE SUMMARY</span>
+          <h3>One-Minute Takeaway</h3>
+        </div>
+        <div class="omt-points">
+          <div class="omt-pt">
+            <span class="omt-num">1</span>
+            <p><strong>Chip geometry determines routing difficulty:</strong> When qubits cannot interact directly, the compiler must insert SWAP operations.</p>
+          </div>
+          <div class="omt-pt">
+            <span class="omt-num">2</span>
+            <p><strong>More routing introduces more operations:</strong> Each SWAP expands into three native CX gates, deepening the circuit and increasing exposure to noise.</p>
+          </div>
+          <div class="omt-pt">
+            <span class="omt-num">3</span>
+            <p><strong>Noise lowers measured fidelity:</strong> Uncorrected fidelity drops from ideal 1.0000 to between 0.8327 and 0.9056 under simulated transmon noise.</p>
+          </div>
+          <div class="omt-pt">
+            <span class="omt-num">4</span>
+            <p><strong>Stabilizer error detection identifies corrupted runs:</strong> Ancilla parity checks detect bit-flip and phase-flip errors without needing physical hardware repair.</p>
+          </div>
+          <div class="omt-pt">
+            <span class="omt-num">5</span>
+            <p><strong>Filtering improves fidelity but reduces usable shot yield:</strong> In our benchmark, Heavy-Hex showed the largest fidelity recovery: <strong>0.8327 &rarr; 0.9255 (+11.15%)</strong>, while retaining <strong>72.37%</strong> of shots.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE 10-QUESTION ACCORDION (Point 11) -->
+      <div class="card-simple">
+        <h3 class="card-heading-simple">10 Questions Every Visitor Can Answer</h3>
+        <p class="matrix-disclaimer">Click any question to view its plain-English explanation:</p>
+
+        <div class="faq-accordion-list">
+          <details class="faq-item">
+            <summary class="faq-q">1. What problem is this project solving? <span class="faq-icon"></span></summary>
+            <div class="faq-a"><p>When two qubits are far apart on a chip, the computer must insert extra operations to connect them. These extra operations introduce noise and lower the reliability of the quantum result. We study how chip geometry influences this.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">2. What are the three architectures being compared? <span class="faq-icon"></span></summary>
+            <div class="faq-a"><p>1) Star/T (5Q): small, hub-based layout; 2) Heavy-Hex (27Q): sparse, grid-like layout; 3) Finite Hyperbolic (21Q): high-connectivity experimental layout.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">3. What does "routing" mean in this project? <span class="faq-icon"></span></summary>
+            <div class="faq-a"><p>The extra operations (SWAPs) needed to move quantum information between qubits that are not directly connected on the chip.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">4. Why does routing matter? <span class="faq-icon"></span></summary>
+            <div class="faq-a"><p>Every SWAP operation expands into native gates. More gates increase run-time and expose data qubits to hardware errors.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">5. What happens when noise is introduced? <span class="faq-icon"></span></summary>
+            <div class="faq-a"><p>Physical hardware noise degrades the quality of the state, causing the fidelity to drop from the ideal 1.0000 down to between 0.83 and 0.90.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">6. What does "fidelity" mean? <span class="faq-icon"></span></summary>
+            <div class="faq-a"><p>How closely the measured quantum state matches the intended state. 1.0000 is a perfect match.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">7. What does the protection step do? <span class="faq-icon"></span></summary>
+            <div class="faq-a"><p>It uses helper ancilla qubits to perform stabilizer parity checks, detecting whether bit-flip or phase-flip errors occurred during execution.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">8. Why does protection improve the measured result? <span class="faq-icon"></span></summary>
+            <div class="faq-a"><p>Through post-selection, runs that failed the error checks are discarded, leaving only clean, uncorrupted quantum states.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-q">9. What is the cost of protection? <span class="faq-icon"></span></summary>
+            <div class="faq-a"><p>Discarding runs reduces the usable shot survival yield (up to 27.6% of runs were discarded on Heavy-Hex), and protection requires extra gates.</p></div>
+          </details>
+
+          <details class="faq-item highlight-faq-item">
+            <summary class="faq-q">10. What was the main finding of the experiment? <span class="faq-icon"></span></summary>
+            <div class="faq-a"><p>Error detection improved fidelity across all three architectures. Heavy-Hex showed the largest relative gain (+11.15%, 0.8327 &rarr; 0.9255), but also discarded the most experimental runs (27.63% discarded).</p></div>
+          </details>
+        </div>
+      </div>
+
+      <!-- COLLAPSIBLE FORMULAS & REPRODUCIBILITY (Point 12) -->
+      <div class="card-simple">
+        <details class="repro-drawer">
+          <summary class="repro-summary">
+            <strong>Technical Details &amp; Reproducibility Formulas</strong>
+            <span class="repro-toggle-text" id="repro-toggle-text">Click to expand / collapse formulas</span>
+          </summary>
+          <div class="formulas-grid">
+            <div class="formula-box">
+              <span class="f-title">Target Bell State</span>
+              <div class="f-code">|&Phi;<sup>+</sup>&rang; = (|00&rang; + |11&rang;) / &radic;2</div>
+            </div>
+            <div class="formula-box">
+              <span class="f-title">Tomographic Pauli Bases</span>
+              <div class="f-code">&lang;XX&rang;, &lang;YY&rang;, &lang;ZZ&rang;</div>
+            </div>
+            <div class="formula-box">
+              <span class="f-title">Exact Bell-State Fidelity</span>
+              <div class="f-code">F(&Phi;<sup>+</sup>) = [1 + &lang;XX&rang; &minus; &lang;YY&rang; + &lang;ZZ&rang;] / 4</div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Clean Minimal Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <strong>IBM Qiskit Fall Fest 2026 &bull; PS4 Geometry-Aware Quantum Cloud</strong>
+        <span>Routing, Noise, and Architecture Comparison</span>
+      </div>
+      <div class="footer-right">
+        <span>Machine-Readable Dataset: <code>results/checkpoint3_9case_benchmark.json</code></span>
+        <span>Simulation under a documented transmon-inspired noise model (Qiskit Aer)</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

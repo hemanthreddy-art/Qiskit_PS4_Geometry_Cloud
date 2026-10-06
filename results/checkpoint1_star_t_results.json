@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "checkpoint": "CHECKPOINT_1",
+    "problem_statement": "PS4 - Geometry-Aware Quantum Cloud: Routing, Noise, and Architecture Comparison",
+    "timestamp_utc": "2026-10-06T12:18:48.148349+00:00",
+    "qiskit_version": "2.5.2",
+    "qiskit_aer_version": "0.17.2",
+    "python_version": "3.14.7",
+    "hardware_status": "SIMULATED_AER_BENCHMARK (Explicitly distinguished from physical IBM hardware)"
+  },
+  "topology": {
+    "name": "2016_5qubit_T",
+    "variant": "t",
+    "num_qubits": 5,
+    "edges": [
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "remote_qubits": [
+      0,
+      4
+    ],
+    "graph_distance_hops": 3,
+    "description": "2016 IBM-inspired 5-qubit T-topology (Yorktown/ibmqx2 style): Hub at Q2 connected to wings Q0, Q1 and stem Q3; stem Q3 connects to leaf Q4."
+  },
+  "routing": {
+    "initial_layout": [
+      0,
+      4
+    ],
+    "final_physical_qubits": [
+      2,
+      3
+    ],
+    "swap_count": 2,
+    "native_cx_count": 7,
+    "depth_2q_routed": 2,
+    "depth_2q_native": 4,
+    "total_depth_routed": 3,
+    "total_depth_native": 5,
+    "routing_analysis": "Preparing |Phi+> between remote physical qubits [0, 4] (distance 3 hops) required 2 SWAP operations (decomposing into 7 native CX gates), resulting in a two-qubit gate depth of 4."
+  },
+  "noise_model": {
+    "model_name": "superconducting_baseline_transmon",
+    "hardware_type": "SIMULATED_AER_NOISE (Not physical IBM processor)",
+    "single_qubit_error_rate_p1q": 0.001,
+    "two_qubit_error_rate_p2q": 0.015,
+    "readout_error_rate_pro": 0.015,
+    "single_qubit_target_gates": [
+      "h",
+      "sdg",
+      "sx",
+      "x",
+      "rz"
+    ],
+    "two_qubit_target_gates": [
+      "cx",
+      "swap"
+    ],
+    "physical_assumptions": "Symmetric depolarizing channel for 1Q and 2Q gates; symmetric bit-flip readout assignment error on all physical qubits."
+  },
+  "measurements": {
+    "shots_per_basis": 20000,
+    "seed": 42,
+    "ideal_baseline": {
+      "shots": 20000,
+      "counts": {
+        "XX": {
+          "11": 10077,
+          "00": 9923
+        },
+        "YY": {
+          "01": 10077,
+          "10": 9923
+        },
+        "ZZ": {
+          "11": 10077,
+          "00": 9923
+        }
+      },
+      "expectations": {
+        "XX": 1.0,
+        "YY": -1.0,
+        "ZZ": 1.0
+      },
+      "fidelity": 1.0,
+      "uncertainties": {
+        "sigma_XX": 0.0,
+        "sigma_YY": 0.0,
+        "sigma_ZZ": 0.0,
+        "sigma_fidelity": 0.0
+      }
+    },
+    "noisy_baseline": {
+      "shots": 20000,
+      "counts": {
+        "XX": {
+          "00": 9355,
+          "11": 9482,
+          "01": 562,
+          "10": 601
+        },
+        "YY": {
+          "00": 735,
+          "10": 9321,
+          "01": 9182,
+          "11": 762
+        },
+        "ZZ": {
+          "00": 9376,
+          "11": 9510,
+          "01": 541,
+          "10": 573
+        }
+      },
+      "expectations": {
+        "XX": 0.8837,
+        "YY": -0.8503,
+        "ZZ": 0.8886
+      },
+      "fidelity": 0.90565,
+      "uncertainties": {
+        "sigma_XX": 0.00331,
+        "sigma_YY": 0.003721,
+        "sigma_ZZ": 0.003243,
+        "sigma_fidelity": 0.001486
+      }
+    }
+  },
+  "fidelity_comparison": {
+    "ideal_fidelity": 1.0,
+    "ideal_uncertainty": 0.0,
+    "noisy_fidelity": 0.90565,
+    "noisy_uncertainty": 0.001486,
+    "fidelity_drop": 0.09435,
+    "relative_degradation_percent": 9.44
+  }
+}

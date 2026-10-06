@@ -1,0 +1,738 @@
+{
+  "metadata": {
+    "checkpoint": "CHECKPOINT_3",
+    "problem_statement": "PS4 - Geometry-Aware Quantum Cloud: Routing, Noise, and Architecture Comparison",
+    "timestamp_utc": "2026-10-05T12:56:33.711675+00:00",
+    "software_versions": {
+      "qiskit": "2.5.2",
+      "qiskit_aer": "0.17.2",
+      "python": "3.14.7"
+    },
+    "scientific_scope": "Under the selected Bell-state workload (|Phi+>), selected communication pairs, routing methodology (SABRE), shot budget (20000 per basis), and documented depolarizing transmon noise model, these metrics quantify routing overhead and the efficacy of stabilizer-based error detection with post-selection. This protocol performs error detection rather than full fault-tolerant quantum error correction.",
+    "hardware_nature": "SIMULATED_AER_BENCHMARK (Explicitly distinguished from physical IBM hardware)"
+  },
+  "noise_model": {
+    "model_name": "superconducting_baseline_transmon",
+    "hardware_type": "SIMULATED_AER_NOISE (Not physical IBM processor)",
+    "single_qubit_error_rate_p1q": 0.001,
+    "two_qubit_error_rate_p2q": 0.015,
+    "readout_error_rate_pro": 0.015,
+    "single_qubit_target_gates": [
+      "h",
+      "sdg",
+      "sx",
+      "x",
+      "rz"
+    ],
+    "two_qubit_target_gates": [
+      "cx",
+      "swap"
+    ],
+    "physical_assumptions": "Symmetric depolarizing channel for 1Q and 2Q gates; symmetric bit-flip readout assignment error on all physical qubits."
+  },
+  "benchmark_cases": [
+    {
+      "topology": "2016_5qubit_T",
+      "condition": "ideal",
+      "selected_physical_qubits": [
+        0,
+        4
+      ],
+      "graph_distance": 3,
+      "swap_count": 2,
+      "native_two_qubit_gate_count": 7,
+      "native_two_qubit_depth": 4,
+      "total_circuit_depth": 5,
+      "total_shots": 20000,
+      "accepted_shots": 20000,
+      "rejected_shots": 0,
+      "survival_yield": 1.0,
+      "XX": 1.0,
+      "YY": -1.0,
+      "ZZ": 1.0,
+      "sigma_XX": 0.0,
+      "sigma_YY": 0.0,
+      "sigma_ZZ": 0.0,
+      "bell_fidelity": 1.0,
+      "sigma_fidelity": 0.0,
+      "counts": {
+        "XX": {
+          "11": 10077,
+          "00": 9923
+        },
+        "YY": {
+          "01": 10077,
+          "10": 9923
+        },
+        "ZZ": {
+          "11": 10077,
+          "00": 9923
+        }
+      }
+    },
+    {
+      "topology": "2016_5qubit_T",
+      "condition": "noisy",
+      "selected_physical_qubits": [
+        0,
+        4
+      ],
+      "graph_distance": 3,
+      "swap_count": 2,
+      "native_two_qubit_gate_count": 7,
+      "native_two_qubit_depth": 4,
+      "total_circuit_depth": 5,
+      "total_shots": 20000,
+      "accepted_shots": 20000,
+      "rejected_shots": 0,
+      "survival_yield": 1.0,
+      "XX": 0.8837,
+      "YY": -0.8503,
+      "ZZ": 0.8886,
+      "sigma_XX": 0.00331,
+      "sigma_YY": 0.003721,
+      "sigma_ZZ": 0.003243,
+      "bell_fidelity": 0.90565,
+      "sigma_fidelity": 0.001486,
+      "counts": {
+        "XX": {
+          "00": 9355,
+          "11": 9482,
+          "01": 562,
+          "10": 601
+        },
+        "YY": {
+          "00": 735,
+          "10": 9321,
+          "01": 9182,
+          "11": 762
+        },
+        "ZZ": {
+          "00": 9376,
+          "11": 9510,
+          "01": 541,
+          "10": 573
+        }
+      }
+    },
+    {
+      "topology": "2016_5qubit_T",
+      "condition": "noisy_protection",
+      "selected_physical_qubits": [
+        0,
+        4
+      ],
+      "ancilla_physical_qubits": [
+        1,
+        2
+      ],
+      "initial_layout": [
+        0,
+        4,
+        1,
+        2
+      ],
+      "graph_distance": 3,
+      "swap_count": 3,
+      "native_two_qubit_gate_count": 14,
+      "native_two_qubit_depth": 11,
+      "total_circuit_depth": 14,
+      "total_shots": 20000,
+      "total_shots_all_bases": 60000,
+      "accepted_shots": 51392,
+      "rejected_shots": 8608,
+      "survival_yield": 0.856533,
+      "survival_yield_percent": 85.65,
+      "XX": 0.889889,
+      "YY": -0.885415,
+      "ZZ": 0.907874,
+      "sigma_XX": 0.003487,
+      "sigma_YY": 0.003547,
+      "sigma_ZZ": 0.003205,
+      "bell_fidelity": 0.920794,
+      "sigma_fidelity": 0.001479,
+      "raw_counts": {
+        "XX": {
+          "1000": 484,
+          "0000": 8006,
+          "1100": 8162,
+          "1110": 334,
+          "1101": 446,
+          "0111": 168,
+          "0001": 451,
+          "1010": 300,
+          "0110": 328,
+          "1011": 159,
+          "0010": 384,
+          "0100": 458,
+          "0101": 91,
+          "1001": 81,
+          "0011": 73,
+          "1111": 75
+        },
+        "YY": {
+          "1000": 8043,
+          "0000": 491,
+          "1101": 303,
+          "0100": 8148,
+          "0110": 379,
+          "1100": 493,
+          "0001": 309,
+          "0111": 131,
+          "1010": 362,
+          "0010": 272,
+          "0011": 106,
+          "1011": 126,
+          "1110": 270,
+          "1001": 229,
+          "0101": 241,
+          "1111": 97
+        },
+        "ZZ": {
+          "1000": 397,
+          "0000": 8091,
+          "1100": 8228,
+          "1110": 474,
+          "0111": 154,
+          "0001": 231,
+          "1001": 303,
+          "1011": 135,
+          "0101": 310,
+          "0010": 510,
+          "0011": 104,
+          "0100": 391,
+          "1101": 219,
+          "1010": 167,
+          "0110": 187,
+          "1111": 99
+        }
+      },
+      "accepted_counts": {
+        "XX": {
+          "10": 484,
+          "00": 8006,
+          "11": 8162,
+          "01": 458
+        },
+        "YY": {
+          "10": 8043,
+          "00": 491,
+          "01": 8148,
+          "11": 493
+        },
+        "ZZ": {
+          "10": 397,
+          "00": 8091,
+          "11": 8228,
+          "01": 391
+        }
+      }
+    },
+    {
+      "topology": "contemporary_ibm_heavy_hex_27q",
+      "condition": "ideal",
+      "selected_physical_qubits": [
+        0,
+        14
+      ],
+      "graph_distance": 7,
+      "swap_count": 6,
+      "native_two_qubit_gate_count": 19,
+      "native_two_qubit_depth": 13,
+      "total_circuit_depth": 14,
+      "total_shots": 20000,
+      "accepted_shots": 20000,
+      "rejected_shots": 0,
+      "survival_yield": 1.0,
+      "XX": 1.0,
+      "YY": -1.0,
+      "ZZ": 1.0,
+      "sigma_XX": 0.0,
+      "sigma_YY": 0.0,
+      "sigma_ZZ": 0.0,
+      "bell_fidelity": 1.0,
+      "sigma_fidelity": 0.0,
+      "counts": {
+        "XX": {
+          "11": 10077,
+          "00": 9923
+        },
+        "YY": {
+          "01": 10077,
+          "10": 9923
+        },
+        "ZZ": {
+          "11": 10077,
+          "00": 9923
+        }
+      }
+    },
+    {
+      "topology": "contemporary_ibm_heavy_hex_27q",
+      "condition": "noisy",
+      "selected_physical_qubits": [
+        0,
+        14
+      ],
+      "graph_distance": 7,
+      "swap_count": 6,
+      "native_two_qubit_gate_count": 19,
+      "native_two_qubit_depth": 13,
+      "total_circuit_depth": 14,
+      "total_shots": 20000,
+      "accepted_shots": 20000,
+      "rejected_shots": 0,
+      "survival_yield": 1.0,
+      "XX": 0.7692,
+      "YY": -0.709,
+      "ZZ": 0.8525,
+      "sigma_XX": 0.004518,
+      "sigma_YY": 0.004987,
+      "sigma_ZZ": 0.003696,
+      "bell_fidelity": 0.832675,
+      "sigma_fidelity": 0.001919,
+      "counts": {
+        "XX": {
+          "00": 8767,
+          "11": 8925,
+          "01": 1116,
+          "10": 1192
+        },
+        "YY": {
+          "00": 1408,
+          "10": 8615,
+          "01": 8475,
+          "11": 1502
+        },
+        "ZZ": {
+          "00": 9169,
+          "11": 9356,
+          "01": 714,
+          "10": 761
+        }
+      }
+    },
+    {
+      "topology": "contemporary_ibm_heavy_hex_27q",
+      "condition": "noisy_protection",
+      "selected_physical_qubits": [
+        0,
+        14
+      ],
+      "ancilla_physical_qubits": [
+        1,
+        13
+      ],
+      "initial_layout": [
+        0,
+        14,
+        1,
+        13
+      ],
+      "graph_distance": 7,
+      "swap_count": 11,
+      "native_two_qubit_gate_count": 38,
+      "native_two_qubit_depth": 23,
+      "total_circuit_depth": 25,
+      "total_shots": 20000,
+      "total_shots_all_bases": 60000,
+      "accepted_shots": 43423,
+      "rejected_shots": 16577,
+      "survival_yield": 0.723717,
+      "survival_yield_percent": 72.37,
+      "XX": 0.90337,
+      "YY": -0.901381,
+      "ZZ": 0.897187,
+      "sigma_XX": 0.00356,
+      "sigma_YY": 0.003599,
+      "sigma_ZZ": 0.003676,
+      "bell_fidelity": 0.925485,
+      "sigma_fidelity": 0.001564,
+      "raw_counts": {
+        "XX": {
+          "0000": 6818,
+          "1100": 6990,
+          "0110": 325,
+          "1110": 835,
+          "0100": 354,
+          "1101": 1060,
+          "1010": 331,
+          "0010": 793,
+          "0011": 171,
+          "1000": 347,
+          "0001": 1063,
+          "0111": 249,
+          "1001": 103,
+          "1111": 188,
+          "1011": 249,
+          "0101": 124
+        },
+        "YY": {
+          "0001": 881,
+          "1101": 880,
+          "0100": 6980,
+          "0111": 167,
+          "0110": 872,
+          "0000": 355,
+          "1000": 6786,
+          "1110": 288,
+          "1010": 870,
+          "1100": 359,
+          "0010": 252,
+          "1001": 309,
+          "0101": 309,
+          "1111": 270,
+          "0011": 257,
+          "1011": 165
+        },
+        "ZZ": {
+          "0000": 6781,
+          "1100": 6911,
+          "0110": 201,
+          "0111": 214,
+          "1101": 318,
+          "0101": 919,
+          "1110": 964,
+          "1011": 220,
+          "0100": 380,
+          "0010": 929,
+          "1001": 881,
+          "0001": 307,
+          "0011": 202,
+          "1111": 218,
+          "1010": 193,
+          "1000": 362
+        }
+      },
+      "accepted_counts": {
+        "XX": {
+          "00": 6818,
+          "11": 6990,
+          "01": 354,
+          "10": 347
+        },
+        "YY": {
+          "01": 6980,
+          "00": 355,
+          "10": 6786,
+          "11": 359
+        },
+        "ZZ": {
+          "00": 6781,
+          "11": 6911,
+          "01": 380,
+          "10": 362
+        }
+      }
+    },
+    {
+      "topology": "finite_hyperbolic_poincare_21q",
+      "condition": "ideal",
+      "selected_physical_qubits": [
+        6,
+        13
+      ],
+      "graph_distance": 4,
+      "swap_count": 3,
+      "native_two_qubit_gate_count": 10,
+      "native_two_qubit_depth": 7,
+      "total_circuit_depth": 8,
+      "total_shots": 20000,
+      "accepted_shots": 20000,
+      "rejected_shots": 0,
+      "survival_yield": 1.0,
+      "XX": 1.0,
+      "YY": -1.0,
+      "ZZ": 1.0,
+      "sigma_XX": 0.0,
+      "sigma_YY": 0.0,
+      "sigma_ZZ": 0.0,
+      "bell_fidelity": 1.0,
+      "sigma_fidelity": 0.0,
+      "counts": {
+        "XX": {
+          "11": 10077,
+          "00": 9923
+        },
+        "YY": {
+          "01": 10077,
+          "10": 9923
+        },
+        "ZZ": {
+          "11": 10077,
+          "00": 9923
+        }
+      }
+    },
+    {
+      "topology": "finite_hyperbolic_poincare_21q",
+      "condition": "noisy",
+      "selected_physical_qubits": [
+        6,
+        13
+      ],
+      "graph_distance": 4,
+      "swap_count": 3,
+      "native_two_qubit_gate_count": 10,
+      "native_two_qubit_depth": 7,
+      "total_circuit_depth": 8,
+      "total_shots": 20000,
+      "accepted_shots": 20000,
+      "rejected_shots": 0,
+      "survival_yield": 1.0,
+      "XX": 0.8482,
+      "YY": -0.8132,
+      "ZZ": 0.8872,
+      "sigma_XX": 0.003745,
+      "sigma_YY": 0.004115,
+      "sigma_ZZ": 0.003262,
+      "bell_fidelity": 0.88715,
+      "sigma_fidelity": 0.001613,
+      "counts": {
+        "XX": {
+          "00": 9140,
+          "11": 9342,
+          "01": 743,
+          "10": 775
+        },
+        "YY": {
+          "00": 891,
+          "10": 9140,
+          "01": 8992,
+          "11": 977
+        },
+        "ZZ": {
+          "00": 9358,
+          "11": 9514,
+          "01": 525,
+          "10": 603
+        }
+      }
+    },
+    {
+      "topology": "finite_hyperbolic_poincare_21q",
+      "condition": "noisy_protection",
+      "selected_physical_qubits": [
+        6,
+        13
+      ],
+      "ancilla_physical_qubits": [
+        1,
+        3
+      ],
+      "initial_layout": [
+        6,
+        13,
+        1,
+        3
+      ],
+      "graph_distance": 4,
+      "swap_count": 6,
+      "native_two_qubit_gate_count": 23,
+      "native_two_qubit_depth": 16,
+      "total_circuit_depth": 19,
+      "total_shots": 20000,
+      "total_shots_all_bases": 60000,
+      "accepted_shots": 47152,
+      "rejected_shots": 12848,
+      "survival_yield": 0.785867,
+      "survival_yield_percent": 78.59,
+      "XX": 0.897537,
+      "YY": -0.878661,
+      "ZZ": 0.882151,
+      "sigma_XX": 0.003518,
+      "sigma_YY": 0.003805,
+      "sigma_ZZ": 0.003759,
+      "bell_fidelity": 0.914587,
+      "sigma_fidelity": 0.0016,
+      "raw_counts": {
+        "XX": {
+          "1000": 407,
+          "0000": 7396,
+          "0011": 133,
+          "1100": 7512,
+          "0010": 517,
+          "1011": 298,
+          "1010": 440,
+          "0111": 301,
+          "1110": 582,
+          "1101": 633,
+          "0100": 398,
+          "0110": 482,
+          "0001": 635,
+          "1001": 64,
+          "0101": 53,
+          "1111": 149
+        },
+        "YY": {
+          "1000": 7330,
+          "0000": 472,
+          "0100": 7456,
+          "0011": 275,
+          "1011": 153,
+          "1010": 603,
+          "0111": 168,
+          "1110": 406,
+          "1111": 273,
+          "1101": 389,
+          "0010": 355,
+          "0110": 629,
+          "1001": 325,
+          "1100": 483,
+          "0001": 377,
+          "0101": 306
+        },
+        "ZZ": {
+          "1000": 449,
+          "0000": 7325,
+          "0011": 194,
+          "1100": 7448,
+          "0010": 702,
+          "1011": 230,
+          "1110": 766,
+          "0101": 399,
+          "1101": 304,
+          "0111": 234,
+          "0100": 476,
+          "0001": 320,
+          "1010": 284,
+          "1001": 386,
+          "0110": 284,
+          "1111": 199
+        }
+      },
+      "accepted_counts": {
+        "XX": {
+          "10": 407,
+          "00": 7396,
+          "11": 7512,
+          "01": 398
+        },
+        "YY": {
+          "10": 7330,
+          "00": 472,
+          "01": 7456,
+          "11": 483
+        },
+        "ZZ": {
+          "10": 449,
+          "00": 7325,
+          "11": 7448,
+          "01": 476
+        }
+      }
+    }
+  ],
+  "protection_analysis": {
+    "2016_5qubit_T": {
+      "noisy_fidelity": 0.90565,
+      "protected_fidelity": 0.920794,
+      "fidelity_improvement": 0.015144,
+      "relative_improvement_percent": 1.67,
+      "accepted_shots": 51392,
+      "rejected_shots": 8608,
+      "survival_yield": 0.856533,
+      "survival_yield_percent": 85.65,
+      "overhead": {
+        "circuit_overhead": {
+          "additional_swaps": 1,
+          "additional_native_cxs": 7,
+          "additional_depth_2q": 7,
+          "additional_total_depth": 9,
+          "additional_measurements": 2
+        },
+        "sampling_overhead": {
+          "total_shots": 60000,
+          "rejected_shots": 8608,
+          "survival_yield": 0.856533,
+          "survival_yield_percent": 85.65
+        },
+        "absolute_metrics": {
+          "baseline_swaps": 2,
+          "protected_swaps": 3,
+          "baseline_native_cxs": 7,
+          "protected_native_cxs": 14,
+          "baseline_depth_2q": 4,
+          "protected_depth_2q": 11
+        }
+      }
+    },
+    "contemporary_ibm_heavy_hex_27q": {
+      "noisy_fidelity": 0.832675,
+      "protected_fidelity": 0.925485,
+      "fidelity_improvement": 0.09281,
+      "relative_improvement_percent": 11.15,
+      "accepted_shots": 43423,
+      "rejected_shots": 16577,
+      "survival_yield": 0.723717,
+      "survival_yield_percent": 72.37,
+      "overhead": {
+        "circuit_overhead": {
+          "additional_swaps": 5,
+          "additional_native_cxs": 19,
+          "additional_depth_2q": 10,
+          "additional_total_depth": 11,
+          "additional_measurements": 2
+        },
+        "sampling_overhead": {
+          "total_shots": 60000,
+          "rejected_shots": 16577,
+          "survival_yield": 0.723717,
+          "survival_yield_percent": 72.37
+        },
+        "absolute_metrics": {
+          "baseline_swaps": 6,
+          "protected_swaps": 11,
+          "baseline_native_cxs": 19,
+          "protected_native_cxs": 38,
+          "baseline_depth_2q": 13,
+          "protected_depth_2q": 23
+        }
+      }
+    },
+    "finite_hyperbolic_poincare_21q": {
+      "noisy_fidelity": 0.88715,
+      "protected_fidelity": 0.914587,
+      "fidelity_improvement": 0.027437,
+      "relative_improvement_percent": 3.09,
+      "accepted_shots": 47152,
+      "rejected_shots": 12848,
+      "survival_yield": 0.785867,
+      "survival_yield_percent": 78.59,
+      "overhead": {
+        "circuit_overhead": {
+          "additional_swaps": 3,
+          "additional_native_cxs": 13,
+          "additional_depth_2q": 9,
+          "additional_total_depth": 11,
+          "additional_measurements": 2
+        },
+        "sampling_overhead": {
+          "total_shots": 60000,
+          "rejected_shots": 12848,
+          "survival_yield": 0.785867,
+          "survival_yield_percent": 78.59
+        },
+        "absolute_metrics": {
+          "baseline_swaps": 3,
+          "protected_swaps": 6,
+          "baseline_native_cxs": 10,
+          "protected_native_cxs": 23,
+          "baseline_depth_2q": 7,
+          "protected_depth_2q": 16
+        }
+      }
+    }
+  },
+  "generated_figures": {
+    "swap_count": "C:\\Users\\karti\\OneDrive\\Documents\\Qiskit_PS4_Geometry_Cloud\\results\\figures\\swap_count_by_topology.png",
+    "native_two_qubit_depth": "C:\\Users\\karti\\OneDrive\\Documents\\Qiskit_PS4_Geometry_Cloud\\results\\figures\\native_two_qubit_depth_by_topology.png",
+    "noisy_fidelity": "C:\\Users\\karti\\OneDrive\\Documents\\Qiskit_PS4_Geometry_Cloud\\results\\figures\\noisy_fidelity_by_topology.png",
+    "protected_fidelity": "C:\\Users\\karti\\OneDrive\\Documents\\Qiskit_PS4_Geometry_Cloud\\results\\figures\\protected_fidelity_by_topology.png",
+    "fidelity_improvement": "C:\\Users\\karti\\OneDrive\\Documents\\Qiskit_PS4_Geometry_Cloud\\results\\figures\\fidelity_improvement_from_protection.png",
+    "survival_yield": "C:\\Users\\karti\\OneDrive\\Documents\\Qiskit_PS4_Geometry_Cloud\\results\\figures\\survival_yield_by_topology.png",
+    "fidelity_vs_survival_tradeoff": "C:\\Users\\karti\\OneDrive\\Documents\\Qiskit_PS4_Geometry_Cloud\\results\\figures\\fidelity_vs_survival_tradeoff.png",
+    "protection_overhead": "C:\\Users\\karti\\OneDrive\\Documents\\Qiskit_PS4_Geometry_Cloud\\results\\figures\\protection_overhead_comparison.png",
+    "benchmark_9case_dashboard": "C:\\Users\\karti\\OneDrive\\Documents\\Qiskit_PS4_Geometry_Cloud\\results\\figures\\benchmark_9case_dashboard.png"
+  }
+}
